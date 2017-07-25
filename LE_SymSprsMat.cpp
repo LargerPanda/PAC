@@ -621,7 +621,8 @@ void LE_FBackwardSym(SprsUMatRealStru *pFU,double b[],double x[])
    rs_u=pFU->uMax.rs_u;
    j_u=pFU->uMax.j_u;
    iDim=pFU->uMax.iDim;
-
+   
+	omp_set_nested(1);
 #pragma omp parallel
 {
    #pragma omp for
