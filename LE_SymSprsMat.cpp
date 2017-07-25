@@ -241,7 +241,6 @@ void LU_EliminationTreeG(SprsMatRealStru *pG, int* pParent)
    istart=pG->Mat.piIstart;
 #pragma omp parallel
 {
-	#pragma omp for
 	for(i=1; i<=iDim; i++)
 	{
 		pParent[i] = 0;
