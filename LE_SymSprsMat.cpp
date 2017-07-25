@@ -624,9 +624,10 @@ void LE_FBackwardSym(SprsUMatRealStru *pFU,double b[],double x[])
 
 #pragma omp parallel
 {
+   #pragma omp for
    for(i = 1; i <= iDim; i++)
       x[i] = b[i];
-
+	#pragma omp for
 	for(i = 1; i <= iDim; i++)
 	{
 		xc = x[i];
@@ -639,10 +640,10 @@ void LE_FBackwardSym(SprsUMatRealStru *pFU,double b[],double x[])
 			x[j] -= u_u[k]*xc;
 		}
 	}
-
+   #pragma omp for
    for(i=1; i<=iDim; i++)
       x[i] /= d_u[i];
-
+	#pragma omp for
    for(i=iDim-1; i>=1; i--)
    {
 		ks = rs_u[i];
