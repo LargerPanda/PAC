@@ -245,14 +245,15 @@ void LU_EliminationTreeG(SprsMatRealStru *pG, int* pParent)
 
 	for(i=1; i<=iDim; i++)
 	{
-		pParent[i] = 0;
-		vParent[i] = 0;
+		
 
       jmn = istart[i];
       kp = linkp[jmn];
       if(kp==0) continue;
 	  kn = linkn[jmn];
-      
+      pParent[i] = 0;
+	  vParent[i] = 0;
+	  
       while(kp!=jmn)
       {
 			j = kn;
@@ -621,6 +622,8 @@ void LE_FBackwardSym(SprsUMatRealStru *pFU,double b[],double x[])
    j_u=pFU->uMax.j_u;
    iDim=pFU->uMax.iDim;
 
+#pragma omp parallel
+{
    for(i = 1; i <= iDim; i++)
       x[i] = b[i];
 
@@ -653,6 +656,7 @@ void LE_FBackwardSym(SprsUMatRealStru *pFU,double b[],double x[])
 		}
       x[i] = xc;
 	}
+}
 }
 
 
