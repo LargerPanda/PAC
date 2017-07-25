@@ -382,6 +382,16 @@ void LU_SetUMatECountsG(SprsMatRealStru *pG,int* pParent,SprsUMatRealStru *pU)
 	return;
 }
 
+inline double dtime() // Return double style timestamp using gettimeofday().
+{
+    double tseconds;
+    struct timeval mytime;
+
+    gettimeofday(&mytime, NULL);
+    tseconds = (double)(mytime.tv_sec + mytime.tv_usec*1.0e-6);
+    return (tseconds);
+} /* dtime() */
+
 
 //////////////////////////////////////////////////////////////////////
 // º¯ Êý Ãû:          // LU_SymbolicSymG
@@ -417,9 +427,16 @@ void LU_SymbolicSymG(SprsMatRealStru *pG,SprsUMatRealStru *pFU)
 
    Lnz=(int *)calloc(iDim+1,sizeof(int));
    //checkPoint(Lnz,"LU_SymbolicSymG:Lnz");
-
+   
+   double t1,t2;
+   t1 = dtime();
    LU_EliminationTreeG(pG,pParent);
+   t2 = dtime();
+   printf("LU_EliminationTreeG's time is :%lf\n",t2-t1);
+   t1 = dtime();
    LU_SetUMatECountsG(pG,pParent,pFU);
+   t2 = dtime();
+   printf("LU_SetUMatECountsG's time is :%lf\n",t2-t1);
 
    istart=pG->Mat.piIstart;
    linkp=pG->Mat.piLinkp;
