@@ -241,17 +241,17 @@ void LU_EliminationTreeG(SprsMatRealStru *pG, int* pParent)
    linkn=pG->Mat.piLinkn;
    istart=pG->Mat.piIstart;
 
-#pragma omp parallel
-{
+
+
 	for(i=1; i<=iDim; i++)
 	{
 		pParent[i] = 0;
 		vParent[i] = 0;
 
       jmn = istart[i];
-      kn = linkn[jmn];
       kp = linkp[jmn];
       if(kp==0) continue;
+	  kn = linkn[jmn];
       
       while(kp!=jmn)
       {
@@ -274,7 +274,7 @@ void LU_EliminationTreeG(SprsMatRealStru *pG, int* pParent)
          kp=linkp[kp];
 		}
 	}
-}
+
 
    free(vParent);
    vParent=NULL;
